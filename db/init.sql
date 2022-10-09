@@ -17,3 +17,14 @@ SELECT * FROM (SELECT 'Alex', 'Rover', '{SHA}QL0AFWMIX8NRZTKeof9cXsvbvu8=') AS t
 WHERE NOT EXISTS (
     SELECT name FROM users WHERE name = 'Alex' AND surname = 'Rover'
 ) LIMIT 1;
+
+CREATE TABLE weather 
+(
+    day  DATE,
+    temperature int
+);
+
+INSERT INTO weather (day, temperature) VALUES
+('2022-10-20', 10),
+('2022-10-21', 11),
+('2022-10-22', 12);
