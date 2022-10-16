@@ -1,0 +1,3 @@
+RewriteEngine On
+
+RewriteRule ^include(/|/.+)?$ - [R=404,L]
