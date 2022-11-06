@@ -90,28 +90,15 @@
     </form>
 
     <?php
-        $login = $_ENV['MONGO_USER'];
-        $password = $_ENV['MONGO_PASSWORD'];
-        $manager = new MongoDB\Driver\Manager("mongodb://" . $login . ":" . $password . "@" . "mongo:27017");
-
-        print_r($_FILES);
-        if (array_key_exists('file', $_FILES)) {
-            echo 1;
-            $data = new MongoDB\Driver\BulkWrite();
-            $data->insert(array(
-                "user" => $name,
-                "payload" => $_FILES['file'].getBytes()
-            ));
-            $manager->executeBulkWrite("pdf.documents", $data);
-        }
-
-        $query = new MongoDB\Driver\Query(array());
-        $cursor = $manager->executeQuery('pdf.documents', $query);
-        $cursor->rewind();
-        foreach ($cursor as $document) {
-           echo "<a href=\"download.php?name=" . $document->name . "&user=" . $name . "\">" . $document->name . "</a>";
-           echo "<br>";
-        }
+    $storagePath = "/upload";
+    if (array_key_exists('file', $_FILES)) {
+        move_uploaded_file($_FILES['file']['tmp_name'], $storagePath . "/" . $_FILES['file']['name']);
+    }
+    $files = scandir($storagePath);
+    foreach($files as $file) {
+        echo "<a href=\"download.php?file=" . $file . "\">" . $file . "</a>";
+        echo "<br>";
+    }
     ?>
 
 </body>

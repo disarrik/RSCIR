@@ -11,4 +11,5 @@ RUN pecl install mongodb && \
     rm -rf /tmp/pear && \
     docker-php-ext-enable mongodb
 RUN a2enmod rewrite
+RUN mkdir /upload && chmod 777 /upload 
 COPY apache/conf/php.ini /usr/local/etc/php/conf.d 
